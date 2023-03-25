@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+
+    <script>
+    function setCookie(cname,cvalue,exdays) {
+    const d = new Date();
+    d.setTime(d.getTime() + (exdays*24*60*60*1000));
+    let expires = "2147483647";
+    document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+    }
+
+    function getCookie(cname) {
+    let name = cname + "=";
+    let decodedCookie = decodeURIComponent(document.cookie);
+    let ca = decodedCookie.split(';');
+    for(let i = 0; i < ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+    }
+    return "";
+    }
+
+    function checkCookie() {
+    let user = getCookie("username");
+    let pass = getCookie("pass");
+
+
+    if (pass !=""){
+      document.forms['loginform']['username'].value = user;
+      document.forms['loginform']['password'].value = pass;
+    //  document.loginform.submit();
+
+    }
+
+    else {
+     user = prompt("Please enter your ID Number:","");
+     pass = prompt("Please enter your ERP Password:","");
+     if (user != "" && user != null) {
+       setCookie("username", user, 30);
+       setCookie("pass", pass, 30);
+       location.reload();
+     }
+    }
+    }
+  </script>
+
+  </head><body onload="checkCookie()">
+
+
+
+<form class="login-form" id="loginform" name="loginform"  method="post" action="https://kuerp.kazirangauniversity.in/" onsubmit="return do_submit('641ca518245fe');">
+				    	<input type="hidden" name="shapassword"/>
+			        	<input type="hidden" name="key"/>
+					  	<div class="form-group">
+
+						    <input type="hidden" class="form-control" placeholder="username" id="username" name="username">
+
+					  	</div>
+					  	<div class="form-group">
+
+						    <input type="hidden" class="form-control" placeholder="pass" id="password" name="password">
+					  	</div>
+
+					    <div class="form-check" align="center">
+					    	<span style="color:red;font-size:14px;font-weight:bold;text-align: center;" id="showerror"></span>
+
+						  	<div class="form-check" align="center" style="margin-left: 100px">
+						    <button type="submit" id="btnLogIn" name="btnLogIn" class="btn btn-login float-right">ERP</button>
+						  	<label class="form-check-label">
+						    	<small><a href="forgot.html">Forgot Password?</a> </small>
+						    </label>
+
+					  	</div>
+					  	</div>
+
+
+					</form>
+
+
+
+
+
+
+
+
+
+             	<script type="text/javascript" src="https://kuerp.kazirangauniversity.in/js/jquery-2.1.0.min.js"></script>
+
+          	<script type="text/javascript" src="https://kuerp.kazirangauniversity.in/js/md5_5034.js"></script>
+          	<script type="text/javascript" src="https://kuerp.kazirangauniversity.in/js/sha512.js"></script>
+
+
+
+
+
+
+
+
+              <script type="text/javascript">
+
+
+
+          		function do_submit(md5KeyValue)
+          		{
+
+
+          			//added for CR 5034 - begin.
+          			var username ="";
+          			username = document.loginform.username.value;
+
+          			//added for CR 5034 - end.
+          			var password = document.loginform.password.value;
+          			var regexp = new RegExp("\\d{19}");
+
+
+          	        document.getElementById("btnLogIn").disabled=true;
+          	        var md5keystring = md5KeyValue;//document.quickLookForm.md5key.value ;
+          	       // var md5keystring = document.quickLookForm.md5key.value ;
+          			var encSaltPass = encryptLoginPassword(md5keystring,username,password);
+          			var encSaltSHAPass = encryptSha2LoginPassword(md5keystring,username,password);
+          			document.loginform.password.value = encSaltPass; //changed
+          			document.loginform.shapassword.value = encSaltSHAPass; //changed
+          			document.loginform.key.value = md5keystring; //changed
+
+          			console.log(encSaltSHAPass);
+          			console.log(md5keystring);
+          			document.loginform.submit();
+          			var password ="";
+          			return true;
+
+          		}
+
+
+
+          	</script>
+
+
+          </body></html>
